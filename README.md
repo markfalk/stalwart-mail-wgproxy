@@ -7,9 +7,9 @@ The intent is to allow users to self-host a modest mail server suitable for smal
 ## Architecture Overview
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="self-hosted-server-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="self-hosted-server-light.svg">
-  <img alt="Architecture Diagram" src="self-hosted-server-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/markfalk/stalwart-mail-wgproxy/blob/main/self-hosted-mail-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/markfalk/stalwart-mail-wgproxy/blob/main/self-hosted-mail-light.svg">
+  <img alt="Architecture Diagram" src="https://github.com/markfalk/stalwart-mail-wgproxy/blob/main/self-hosted-mail-light.svg">
 </picture>
 
 - **Self-Hosted Server**:
