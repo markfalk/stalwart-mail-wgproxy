@@ -1,0 +1,20 @@
+options {
+        directory "/var/cache/bind";
+        listen-on { any; };
+        listen-on-v6 { any; };
+        allow-recursion {
+                none;
+        };
+        allow-transfer {
+                none;
+        };
+        allow-update {
+                none;
+        };
+};
+
+zone "yourdomain.tld." {
+        type primary;
+        file "/var/lib/bind/db.yourdomain.tld";
+        notify explicit;
+};

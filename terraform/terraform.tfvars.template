@@ -1,0 +1,7 @@
+# DO NOT COMMIT THIS FILE
+instance_ami = "<AMI>"
+instance_type = "<EC2 INSTANCE TYPE>"
+region = "<AWS REGION>"
+s3_bucket_name= "<S3 BUCKET NAME>"
+wireguard_client_public_key = "<WIREGUARD CLIENT PUBLIC KEY>"
+wireguard_server_private_key = "<WIREGUARD SERVER PRIVATE KEY>"

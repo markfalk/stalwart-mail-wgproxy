@@ -1,0 +1,46 @@
+networks:
+  custom_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: "1440"  # Set MTU to 1440 so that wg0 get set to 1360
+    ipam:
+      config:
+        - subnet: 172.16.24.0/24
+
+services:
+  wireguard:
+    image: linuxserver/wireguard:latest
+    container_name: wireguard
+    restart: always
+    command: ["/bin/bash", "-c", "while true; do sleep 30; done"]
+    volumes:
+      - /mnt/user/appdata/wireguard-dns-mail-external:/etc/wireguard
+    ports:
+      - "9980:8080"
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: "1"
+    networks:
+      custom_network:
+        ipv4_address: 172.16.24.3
+
+  stalwart-mail:
+    image: stalwartlabs/mail-server:v0.11.3
+    container_name: stalwart-mail
+    restart: always
+    volumes:
+      - /mnt/user/appdata/stalwart-data:/opt/stalwart-mail
+    network_mode: "service:wireguard"
+
+  bind9:
+    image: internetsystemsconsortium/bind9:9.18
+    container_name: bind9
+    restart: always
+    volumes:
+      - /mnt/user/appdata/bind/etc:/etc/bind
+      - /mnt/user/appdata/bind/cache/bind:/var/cache/bind
+      - /mnt/user/appdata/bind/lib/bind:/var/lib/bind
+      - /mnt/user/appdata/bind/var/log:/var/log
+    network_mode: "service:wireguard"

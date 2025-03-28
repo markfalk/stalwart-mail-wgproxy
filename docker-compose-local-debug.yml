@@ -1,0 +1,48 @@
+networks:
+  custom_network:
+    driver: bridge
+
+services:
+  wireguard:
+    image: linuxserver/wireguard:latest
+    container_name: wireguard
+    command: ["/bin/bash", "-c", "while true; do sleep 30; done"]
+    volumes:
+      - ./wg-conf:/etc/wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: "1"
+    networks:
+      - custom_network
+
+  stalwart-mail:
+    image: stalwartlabs/mail-server:latest
+    container_name: stalwart-mail
+    ports:
+      - "443:443"
+      - "8080:8080"
+      - "25:25"
+      - "587:587"
+      - "465:465"
+      - "143:143"
+      - "993:993"
+      - "4190:4190"
+      - "110:110"
+      - "995:995"
+    volumes:
+      - ~/spool/stalwart-data:/opt/stalwart-mail
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - custom_network
+
+  app3:
+    image: alpine
+    container_name: app3
+    command: ["sh", "-c", "apk add --no-cache curl && while true; do sleep 30; done"]
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - custom_network

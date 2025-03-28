@@ -1,0 +1,12 @@
+[Interface]
+  Address = 192.168.128.42/24
+  ListenPort = 51820
+  PrivateKey = <CLIENT PRIVATE KEY>
+  DNS = 10.42.0.2
+  PostUp = iptables -t nat -A POSTROUTING -o %i -j MASQUERADE
+  PostDown = iptables -t nat -D POSTROUTING -o %i -j MASQUERADE
+
+[Peer]
+  PublicKey = <SERVER PUBLIC KEY>
+  Endpoint = <AWS EIP PUBLIC IP>:51820
+  AllowedIPs = 0.0.0.0/0
