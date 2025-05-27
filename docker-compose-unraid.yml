@@ -27,7 +27,7 @@ services:
         ipv4_address: 172.16.24.3
 
   stalwart-mail:
-    image: stalwartlabs/mail-server:v0.11.3
+    image: stalwartlabs/stalwart:v0.12.2
     container_name: stalwart-mail
     restart: always
     volumes:
