@@ -2,11 +2,12 @@
 # Amazon Linux 2023 configuration
 
 # Ensure the system is up to date
-yum update -y
+dnf update -y
 
 # Install and start docker
-yum install -y docker
+dnf install -y docker aws-cli iptables amazon-ssm-agent
 systemctl enable --now docker
+systemctl enable --now amazon-ssm-agent
 
 # Enable IPv6 access
 export AWS_USE_DUALSTACK_ENDPOINT=true

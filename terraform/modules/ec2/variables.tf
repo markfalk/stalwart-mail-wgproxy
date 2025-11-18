@@ -5,11 +5,6 @@ variable "instance_type" {
   type        = string
 }
 
-variable "instance_ami" {
-  description = "The AMI ID for the EC2 instance"
-  type        = string
-}
-
 variable "tags" {
   description = "A map of tags to assign to resources"
   type        = map(string)

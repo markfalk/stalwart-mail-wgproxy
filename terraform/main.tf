@@ -24,7 +24,6 @@ module "ssm" {
 module "ec2" {
   source            = "./modules/ec2"
   instance_type     = var.instance_type
-  instance_ami      = var.instance_ami
   tags              = var.tags
   public_subnet_id  = module.vpc.public_subnet_ids[0]
   security_group_id = module.vpc.instance_security_group_id

@@ -1,9 +1,40 @@
+# Get the latest Amazon Linux 2023 ARM64 AMI in your region
+data "aws_ami" "al2023_arm" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-minimal-*-kernel-6.1-arm64"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["arm64"]
+  }
+
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+  owners = ["amazon"]
+}
 
 # Create a Launch Template
 resource "aws_launch_template" "ec2_launch_template" {
   name_prefix   = "ec2-asg-launch-template"
-  image_id      = var.instance_ami
+  image_id      = data.aws_ami.al2023_arm.id
   instance_type = var.instance_type
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      volume_type           = "gp3"
+      volume_size           = 3
+      delete_on_termination = true
+    }
+  }
 
   network_interfaces {
     associate_public_ip_address = false # we will manage the EIP later
@@ -88,7 +119,7 @@ resource "aws_iam_policy" "ec2_ssm_ps_policy" {
           "ssm:GetParameterHistory"
         ]
         Resource = [
-          "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/WireGuardConfig"
+          "arn:aws:ssm:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:parameter/WireGuardConfig"
         ]
       }
     ]

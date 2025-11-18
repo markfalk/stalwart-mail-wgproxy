@@ -32,11 +32,6 @@ variable "instance_type" {
   default     = "t4g.nano"
 }
 
-variable "instance_ami" {
-  description = "AMI ID for the EC2 instance"
-  type        = string
-}
-
 variable "home_cidrs" {
   description = "List of optional IPv6 CIDR blocks for home"
   type        = list(string)
